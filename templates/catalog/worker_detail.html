@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load get_all_projects %}
+
+{% block content %}
+  <h1>{{ worker.username }}</h1>
+  <h3>First name: {{ worker.first_name }}</h3>
+  <h3>Second name: {{ worker.second_name }}</h3>
+  <h4>Position: {{ worker.position }}</h4>
+  <p>Projects: {{ worker.projects.all|get_all_projects }}</p>
+  
+  <hr>
+  <a href="#">Edit</a>
+{% endblock %}

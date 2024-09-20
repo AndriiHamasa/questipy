@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Workers
+  <a href="#" class="btn btn-secondary">Create worker</a>
+  </h1>
+
+  <ul style="list-style: none" class="custom-card-container">
+    {% for worker in worker_list %}
+
+      <li class="custom-card">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{ worker.username }}</h5>
+            <h6 class="card-subtitle mb-2 text-body-secondary">
+              Position: {{ worker.position }}</h6>
+            <p>Projects: {{ worker.projects.count }}</p>
+            <h6 class="card-subtitle mb-2 text-body-secondary">Tasks: {{ project.tasks.count }}
+              task{{ project.tasks.count|pluralize }}</h6>
+            <p class="card-text">{{ project.description }}</p>
+            {#          <a href="{% url 'catalog:project' %}" class="card-link">Team</a>#}
+            <a href="{% url 'catalog:worker-detail' pk=worker.id %}" class="card-link">More</a>
+          </div>
+        </div>
+      </li>
+    {% endfor %}
+
+    {#    <div class="col">col</div>#}
+    {#    <div class="w-100"></div>#}
+    {#    <div class="col">col</div>#}
+    {#    <div class="col">col</div>#}
+  </ul>
+{% endblock %}

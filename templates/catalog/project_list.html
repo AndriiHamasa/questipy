@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Project list</h1>
+  <hr>
+  <ul style="list-style: none">
+    {% for project in project_list %}
+      <li>
+        <div class="card" style="width: 50vw; margin-bottom: 20px">
+          <div class="card-body">
+            <h5 class="card-title">{{ project.name }}</h5>
+            <h6 class="card-subtitle mb-2 text-body-secondary">
+              Team: {{ project.workers.count }} {{ project.workers.count|pluralize:"person,people" }}</h6>
+            <h6 class="card-subtitle mb-2 text-body-secondary">Tasks: {{ project.tasks.count }}
+              task{{ project.tasks.count|pluralize }}</h6>
+            <p class="card-text">{{ project.description }}</p>
+            <a href="{% url 'catalog:project-task-list' pk=project.id %}" class="card-link">Tasks</a>
+            <a href="#" class="card-link">Team</a> {# {% url 'catalog:project-task-list' pk=project.id %} #}
+            <a href="{% url 'catalog:project-detail' pk=project.id %}" class="card-link">Open</a>
+          </div>
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+
+  {% include "includes/pagination.html" %}
+{% endblock %}

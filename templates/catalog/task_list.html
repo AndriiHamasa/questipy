@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Task list</h1>
+  <a href="{% url 'catalog:project-task-create' pk=project_pk %}" class="btn btn-secondary">Create task</a> {#  #}
+  <p>Count of tasks: {{ object_list.count }}</p>
+  {% if object_list %}
+    <ul style="list-style: none;">
+      {% for task in object_list %}
+        <li>
+          <div class="card" style="width: 50vw; margin-bottom: 20px;">
+            <div class="card-body">
+              <p>{{ task.name }}</p>
+              <p>Priority: {{ task.priority }}</p>
+              <p>Deadline: {{ task.deadline }}</p>
+              <p>task.project.id: {{ task.project.id }}</p>
+              <p>task.id: {{ task.id }}</p>
+              <a href="{% url 'catalog:project-task-detail' project_pk=task.project.id pk=task.id %}">Open</a>
+            </div>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>There no any task</p>
+  {% endif %}
+  
+  {% include "includes/pagination.html" %}
+{% endblock %}
