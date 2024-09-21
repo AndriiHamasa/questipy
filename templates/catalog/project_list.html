@@ -2,6 +2,7 @@
 
 {% block content %}
   <h1>Project list</h1>
+  <a href="{% url 'catalog:project-create' %}" class="btn btn-primary">Create project</a>
   <hr>
   <ul style="list-style: none">
     {% for project in project_list %}

@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
+from catalog.forms import ProjectForm
 from catalog.models import Project, Worker, TaskType, Task, Position
 
 
@@ -24,6 +25,18 @@ class ProjectListView(generic.ListView):
 
 class ProjectDetailView(generic.DetailView):
     model = Project
+
+
+class ProjectCreateView(generic.CreateView):
+    model = Project
+    form_class = ProjectForm
+    success_url = reverse_lazy('catalog:project-list')
+
+
+class ProjectUpdateView(generic.CreateView):
+    model = Project
+    form_class = ProjectForm
+    success_url = reverse_lazy('catalog:project-list')
 
 
 class WorkerListView(generic.ListView):
