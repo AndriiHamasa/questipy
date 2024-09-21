@@ -4,5 +4,5 @@
   <h1>{{ project.name }}</h1>
   <p>{{ project.description }}</p>
   <hr>
-  <a href="{% url 'catalog:position-create' pk=project.id %}" class="btn btn-secondary">Edit project</a>
+  <a href="{% url 'catalog:project-update' pk=project.id %}" class="btn btn-secondary">Edit project</a>
 {% endblock %}

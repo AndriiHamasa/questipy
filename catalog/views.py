@@ -1,8 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views import generic
+from django.views import generic, View
 
-from catalog.forms import ProjectForm
+from catalog.forms import ProjectForm, WorkerCreationForm, WorkerPositionUpdateForm, TaskCreationForm
 from catalog.models import Project, Worker, TaskType, Task, Position
 
 
@@ -33,11 +33,15 @@ class ProjectCreateView(generic.CreateView):
     success_url = reverse_lazy('catalog:project-list')
 
 
-class ProjectUpdateView(generic.CreateView):
+class ProjectUpdateView(generic.UpdateView):
     model = Project
     form_class = ProjectForm
     success_url = reverse_lazy('catalog:project-list')
 
+
+class ProjectDeleteView(generic.DeleteView):
+    model = Project
+    success_url = reverse_lazy("catalog:project-list")
 
 class WorkerListView(generic.ListView):
     model = Worker
@@ -46,6 +50,18 @@ class WorkerListView(generic.ListView):
 
 class WorkerDetailView(generic.DetailView):
     model = Worker
+
+
+class WorkerCreateView(generic.CreateView):
+    model = Worker
+    form_class = WorkerCreationForm
+    success_url = reverse_lazy('catalog:worker-list')
+
+
+class WorkerPositionUpdateView(generic.UpdateView):
+    model = Worker
+    form_class = WorkerPositionUpdateForm
+    success_url = reverse_lazy('catalog:worker-list')
 
 
 class ProjectTaskListView(generic.ListView):
@@ -57,6 +73,7 @@ class ProjectTaskListView(generic.ListView):
         context = super().get_context_data(**kwargs)
 
         context["project_pk"] = self.kwargs["pk"]
+        context["project_name"] = Project.objects.get(pk=context["project_pk"])
         return context
 
     def get_queryset(self):
@@ -67,7 +84,7 @@ class ProjectTaskListView(generic.ListView):
 
 class ProjectTaskCreateView(generic.CreateView):
     model = Task
-    fields = "__all__"
+    form_class = TaskCreationForm
     template_name = "catalog/project_task_form.html"
 
     def get_success_url(self):
@@ -75,9 +92,25 @@ class ProjectTaskCreateView(generic.CreateView):
 
         return reverse_lazy("catalog:project-task-list", args=[project_pk])
 
+    def form_valid(self, form):
+        project_pk = self.kwargs.get("pk")
+        project = Project.objects.get(pk=project_pk)
+        form.instance.project = project
+        return super().form_valid(form)
+
 
 class ProjectTaskDetailView(generic.DetailView):
     model = Task
+
+
+class ProjectTaskToggleCompletedView(View):
+    def post(self, request, **kwargs):
+        task = Task.objects.get(pk=kwargs["pk"])
+        print("task before: ", task.is_completed)
+        task.is_completed = not task.is_completed
+        task.save()
+        print("task after: ", Task.objects.get(pk=kwargs["pk"]).is_completed)
+        return redirect("catalog:project-task-list", pk=kwargs["project_pk"])
 
 
 class TaskTypeList(generic.ListView):

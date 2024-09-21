@@ -8,8 +8,9 @@
     {% for project in project_list %}
       <li>
         <div class="card" style="width: 50vw; margin-bottom: 20px">
-          <div class="card-body">
+          <div class="card-body" style="position: relative">
             <h5 class="card-title">{{ project.name }}</h5>
+            <a href="{% url 'catalog:project-delete' pk=project.id %}" class="btn btn-danger" style="position: absolute; top: 10px; right: 10px;">Delete project</a>
             <h6 class="card-subtitle mb-2 text-body-secondary">
               Team: {{ project.workers.count }} {{ project.workers.count|pluralize:"person,people" }}</h6>
             <h6 class="card-subtitle mb-2 text-body-secondary">Tasks: {{ project.tasks.count }}

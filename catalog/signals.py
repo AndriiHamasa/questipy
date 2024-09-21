@@ -6,8 +6,18 @@ from catalog.models import TaskType
 @receiver(post_migrate)
 def create_default_task_types(sender, **kwargs):
     default_task_types = [
-        'bug', 'new feature', 'breaking change', 'refactoring', 'QA'
+        'Bug', 'New feature', 'Breaking change', 'Refactoring', 'QA'
     ]
 
     for task_type in default_task_types:
         TaskType.objects.get_or_create(name=task_type)
+
+
+@receiver(post_migrate)
+def create_default_positions(sender, **kwargs):
+    default_position_list = [
+        'Developer', 'Project Manager', 'QA', 'Designer', 'DevOps'
+    ]
+
+    for position in default_position_list:
+        TaskType.objects.get_or_create(name=position)
