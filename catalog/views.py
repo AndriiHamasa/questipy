@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic, View
 
-from catalog.forms import ProjectForm, WorkerCreationForm, WorkerPositionUpdateForm, TaskCreationForm
+from catalog.forms import ProjectForm, WorkerCreationForm, WorkerPositionUpdateForm, TaskCreationForm, TaskAddWorkersForm
 from catalog.models import Project, Worker, TaskType, Task, Position
 
 
@@ -104,13 +104,21 @@ class ProjectTaskDetailView(generic.DetailView):
 
 
 class ProjectTaskToggleCompletedView(View):
-    def post(self, request, **kwargs):
+    @staticmethod
+    def post(request, **kwargs):
         task = Task.objects.get(pk=kwargs["pk"])
-        print("task before: ", task.is_completed)
         task.is_completed = not task.is_completed
         task.save()
-        print("task after: ", Task.objects.get(pk=kwargs["pk"]).is_completed)
         return redirect("catalog:project-task-list", pk=kwargs["project_pk"])
+
+class ProjectTaskAddWorkersView(generic.UpdateView):
+    model = Task
+    form_class = TaskAddWorkersForm
+    template_name = "catalog/task_add_worker_form.html"
+
+    def get_success_url(self):
+        project_pk = self.kwargs.get("project_pk")
+        return reverse_lazy("catalog:project-task-list", kwargs={"pk":project_pk})
 
 
 class TaskTypeList(generic.ListView):

@@ -10,6 +10,7 @@ from catalog.views import (
     ProjectTaskCreateView,
     ProjectTaskDetailView,
     ProjectTaskToggleCompletedView,
+    ProjectTaskAddWorkersView,
     WorkerListView,
     WorkerDetailView,
     WorkerCreateView,
@@ -31,6 +32,7 @@ urlpatterns = [
     path("projects/<int:pk>/tasks/create/", ProjectTaskCreateView.as_view(), name="project-task-create"),
     path("projects/<int:project_pk>/tasks/<int:pk>/", ProjectTaskDetailView.as_view(), name="project-task-detail"),
     path("projects/<int:project_pk>/tasks/<int:pk>/task-toggle-completed/", ProjectTaskToggleCompletedView.as_view(), name="project-task-toggle-completed"),
+    path("projects/<int:project_pk>/tasks/<int:pk>/add-workers/", ProjectTaskAddWorkersView.as_view(), name="project-task-add-workers"),
     # path("projects/workers/")
     path("workers/", WorkerListView.as_view(), name="worker-list"),
     path("workers/<int:pk>/", WorkerDetailView.as_view(), name="worker-detail"),

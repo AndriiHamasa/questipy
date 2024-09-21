@@ -50,3 +50,13 @@ class TaskCreationForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = ("name", "description", "deadline", "priority", "task_type", "assignees")
+
+
+class TaskAddWorkersForm(forms.ModelForm):
+    assignees = forms.ModelMultipleChoiceField(
+        queryset=get_user_model().objects.all(),
+        widget=forms.CheckboxSelectMultiple(),
+    )
+    class Meta:
+        model = Task
+        fields = ("assignees", )
