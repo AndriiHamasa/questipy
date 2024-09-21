@@ -22,49 +22,111 @@
 }
 
 .switch {
-        position: relative;
-        display: inline-block;
-        width: 40px;
-        height: 20px;
-    }
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+}
 
-    .switch input {
-        opacity: 0;
-        width: 0;
-        height: 0;
-    }
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
 
-    .slider {
-        position: absolute;
-        cursor: pointer;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: #ffcccc;
-        /*#ccc*/
-        transition: .4s;
-        border-radius: 18px;
-    }
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ffcccc;
+    /*#ccc*/
+    transition: .4s;
+    border-radius: 18px;
+}
 
-    .slider:before {
-        position: absolute;
-        content: "";
-        height: 14px;
-        width: 13px;
-        left: 4px;
-        bottom: 3px;
-        background-color: #cc6666;;
-        transition: .4s;
-        border-radius: 50%;
-    }
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 13px;
+    left: 4px;
+    bottom: 3px;
+    background-color: #cc6666;;
+    transition: .4s;
+    border-radius: 50%;
+}
 
-    input.checked + .slider {
-        background-color: #ccffcc;
-        /*#2196F3*/
-    }
+input.checked + .slider {
+    background-color: #ccffcc;
+    /*#2196F3*/
+}
 
-    input.checked + .slider:before {
-        transform: translateX(19px);
-        background-color: #99cc66;
-    }
+input.checked + .slider:before {
+    transform: translateX(19px);
+    background-color: #99cc66;
+}
+
+.custom-select {
+    position: relative;
+    display: inline-block;
+    width: 200px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+
+.select {
+    position: relative;
+    width: 200px; /* Ширина селекта */
+    cursor: pointer;
+    border: 1px solid gray; /* Серый бордер */
+    border-radius: 20px; /* Закругленные углы */
+    background: #a6a6a6; /* Белый фон */
+    transition: border-color 0.3s; /* Плавный переход для бордера */
+}
+
+.select.active {
+    border-color: #a6a6a6; /* Цвет бордера при активации */
+     /*#4835d4*/
+}
+
+.selected {
+    padding: 10px;
+    background: #a6a6a6; /* Фон для выбранного элемента */
+}
+
+.options {
+    display: none; /* Скрыто по умолчанию */
+    position: absolute;
+    top: 100%; /* Под выбранным элементом */
+    left: 0;
+    width: 100%; /* Ширина совпадает с селектом */
+    background: #a6a6a6; /* Фон выпадающего списка */
+    border: 1px solid gray; /* Бордер для выпадающего списка */
+    border-radius: 0 0 5px 5px; /* Закругленные углы снизу */
+    z-index: 1000; /* Сверху остальных элементов */
+
+}
+
+.select.active .options {
+    display: block; /* Показываем при активном состоянии */
+}
+
+.option {
+    padding-top: 5px;
+    padding-left: 40px;
+    text-decoration: none; /* Убираем подчеркивание */
+    color: white; /* Цвет текста */
+    display: block; /* Для всей ширины */
+    font-size: 20px;
+}
+
+.option:hover {
+    background: #ccc; /* Цвет при наведении */
+    color: white;
+    text-decoration: none;
+}
+
