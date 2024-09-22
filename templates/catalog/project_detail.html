@@ -1,8 +1,43 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>{{ project.name }}</h1>
-  <p>{{ project.description }}</p>
-  <hr>
-  <a href="{% url 'catalog:project-update' pk=project.id %}" class="btn btn-secondary">Edit project</a>
+
+  <div style="display: flex; justify-content: space-between; margin-top: 100px;">
+    <h2>Project Details</h2>
+    <a href="{% url 'catalog:project-update' pk=project.id %}" class="btn btn-secondary btn-lg"
+       >Edit project</a>
+  </div>
+  <div class="container" style="display: flex; margin-top: 50px;">
+    <div class=" project-info" style="margin-right: 100px;">
+      <p><strong>Name:</strong> {{ project.name }}</p>
+      <p><strong>Description:</strong> {{ project.description }}</p>
+    </div>
+    <div style="margin-right: 100px;">
+      <h3>Workers:</h3>
+      {% if project.workers.count > 0 %}
+        {% for worker in project.workers.all %}
+          <p>{{ worker.get_full_name }}{% if not forloop.last %}, {% endif %}</p>
+        {% endfor %}
+      {% else %}
+        No workers assigned
+      {% endif %}
+      </p>
+    </div>
+
+    <div class="task-list">
+      <h3>Associated Tasks</h3>
+      {% if project.tasks.count > 0 %}
+        {% for task in project.tasks.all %}
+          <div class="task">
+            <p><strong>Task Name:</strong> {{ task.name }}</p>
+            <p><strong>Description:</strong> {{ task.description }}</p>
+            <p><strong>Deadline:</strong> {{ task.deadline }}</p>
+            <p><strong>Completed:</strong> {{ task.is_completed|yesno:"Yes,No" }}</p>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p>No tasks associated with this project.</p>
+      {% endif %}
+    </div>
+  </div>
 {% endblock %}

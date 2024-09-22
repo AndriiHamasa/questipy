@@ -8,10 +8,10 @@
   {#    <input type="submit" value="Create" class="btn btn-primary">#}
   {#  </form>#}
 
-  <section class="w-100 p-5 gradient-custom-2" style="border-radius: .5rem;">
+  <section class="w-100 p-5 gradient-custom-2" style="border-radius: 5px; box-shadow: 0 0 5px rgba(204, 204, 204, 0.7); animation: pulse-shadow 2s infinite;">
     <style>
         .gradient-custom-2 {
-            background: linear-gradient(to right, rgba(211, 211, 211, 1), rgba(169, 169, 169, 1));
+            background: linear-gradient(to right, rgba(10, 25, 41, 1), rgba(24, 38, 49, 1));
         }
 
         .card {
@@ -23,10 +23,10 @@
         }
     </style>
 
-    <div class="row">
+    <div class="row" >
       <div class="col-12">
-        <div class="card">
-          <div class="card-body">
+        <div class="card" >
+          <div class="card-body" style="box-shadow: 0 0 5px rgba(204, 204, 204, 0.7); background: linear-gradient(to bottom, #2c3e50, #4b6584);">
             <form action="" method="post">
               {% csrf_token %}
               <div class="row">

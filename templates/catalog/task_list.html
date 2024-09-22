@@ -7,10 +7,10 @@
       <a href="{% url 'catalog:project-task-create' pk=project_pk %}" class="btn btn-secondary btn-lg">Create task</a> {#  #}
     </div>
     {% if object_list %}
-      <ul style="list-style: none;" class="custom-card-container">
+      <ul style="list-style: none;" class="custom-card-container" style="border: 1px solid #ccc; border-radius: 5px; box-shadow: 0 0 5px rgba(204, 204, 204, 0.7); animation: pulse-shadow 2s infinite;">
         {% for task in object_list %}
-          <li class="custom-card" style="padding-top: 40px;">
-            <div class="card" style="position: relative; padding-top: 40px;">
+          <li class="custom-card" style="padding-top: 40px; background: linear-gradient(to bottom, #2c3e50, #4b6584); border: 1px solid #ddd; border-radius: 5px; width: 45%; box-shadow: 0 0 5px rgba(204, 204, 204, 0.7);">
+            <div class="card" style="position: relative; padding-top: 40px; background-color: #1a252f;">
               <div class="card-body">
 
                 <p><strong>Task: {{ task.name }}</strong></p>

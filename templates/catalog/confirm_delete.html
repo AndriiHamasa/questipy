@@ -7,11 +7,11 @@
 {#    {% csrf_token %}#}
 {#    <input type="submit" value="Yes" class="btn btn-danger">#}
 {#  </form>#}
-  
-  <section class="p-5 gradient-custom-2" style="border-radius: .5rem; width: 40vw; margin: -200px auto 0;">
+
+  <section class="p-5 gradient-custom-2" style="width: 40vw; margin: -200px auto 0; border-radius: 5px; box-shadow: 0 0 5px rgba(204, 204, 204, 0.7); animation: pulse-shadow 2s infinite;">
     <style>
         .gradient-custom-2 {
-            background: linear-gradient(to right, rgba(255, 99, 99, 1), rgba(255, 0, 0, 1));
+            background: linear-gradient(to right, rgba(70, 0, 0, 1), rgba(139, 0, 0, 1));
 
         }
 
@@ -27,7 +27,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-body">
+                <div class="card-body" style="box-shadow: 0 0 5px rgba(204, 204, 204, 0.7); background: linear-gradient(to bottom, #2c3e50, #4b6584)";>
                     <form action="" method="post" >
                         {% csrf_token %}
                         <div style="position: relative">

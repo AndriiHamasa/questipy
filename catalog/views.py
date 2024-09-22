@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic, View
@@ -30,7 +31,7 @@ def index(request):
     return render(request, "catalog/index.html", context=context)
 
 
-class ProjectListView(generic.ListView):
+class ProjectListView(LoginRequiredMixin, generic.ListView):
     model = Project
     paginate_by = 5
 
@@ -55,28 +56,28 @@ class ProjectListView(generic.ListView):
         return Project.objects.all()
 
 
-class ProjectDetailView(generic.DetailView):
+class ProjectDetailView(LoginRequiredMixin, generic.DetailView):
     model = Project
 
 
-class ProjectCreateView(generic.CreateView):
-    model = Project
-    form_class = ProjectForm
-    success_url = reverse_lazy('catalog:project-list')
-
-
-class ProjectUpdateView(generic.UpdateView):
+class ProjectCreateView(LoginRequiredMixin, generic.CreateView):
     model = Project
     form_class = ProjectForm
     success_url = reverse_lazy('catalog:project-list')
 
 
-class ProjectDeleteView(generic.DeleteView):
+class ProjectUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Project
+    form_class = ProjectForm
+    success_url = reverse_lazy('catalog:project-list')
+
+
+class ProjectDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Project
     template_name = "catalog/confirm_delete.html"
     success_url = reverse_lazy("catalog:project-list")
 
-class WorkerListView(generic.ListView):
+class WorkerListView(LoginRequiredMixin, generic.ListView):
     model = Worker
     paginate_by = 5
 
@@ -102,30 +103,30 @@ class WorkerListView(generic.ListView):
 
 
 
-class WorkerDetailView(generic.DetailView):
+class WorkerDetailView(LoginRequiredMixin, generic.DetailView):
     model = Worker
 
 
-class WorkerCreateView(generic.CreateView):
+class WorkerCreateView(LoginRequiredMixin, generic.CreateView):
     model = Worker
     form_class = WorkerCreationForm
     success_url = reverse_lazy('catalog:worker-list')
 
 
-class WorkerPositionUpdateView(generic.UpdateView):
+class WorkerPositionUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Worker
     form_class = WorkerPositionUpdateForm
     template_name = "catalog/worker-update-position-form.html"
     success_url = reverse_lazy('catalog:worker-list')
 
 
-class WorkerDeleteView(generic.DeleteView):
+class WorkerDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Worker
     template_name = "catalog/confirm_delete.html"
     success_url = reverse_lazy('catalog:worker-list')
 
 
-class ProjectTaskListView(generic.ListView):
+class ProjectTaskListView(LoginRequiredMixin, generic.ListView):
     model = TaskType
     template_name = "catalog/task_list.html"
     paginate_by = 5
@@ -154,7 +155,7 @@ class ProjectTaskListView(generic.ListView):
         return Task.objects.filter(project__id=project_id)
 
 
-class ProjectTaskCreateView(generic.CreateView):
+class ProjectTaskCreateView(LoginRequiredMixin, generic.CreateView):
     model = Task
     form_class = TaskForm
     template_name = "catalog/project_task_form.html"
@@ -171,7 +172,7 @@ class ProjectTaskCreateView(generic.CreateView):
         return super().form_valid(form)
 
 
-class ProjectTaskUpdateView(generic.UpdateView):
+class ProjectTaskUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Task
     form_class = TaskForm
     template_name = "catalog/project_task_form.html"
@@ -188,11 +189,11 @@ class ProjectTaskUpdateView(generic.UpdateView):
         return super().form_valid(form)
 
 
-class ProjectTaskDetailView(generic.DetailView):
+class ProjectTaskDetailView(LoginRequiredMixin, generic.DetailView):
     model = Task
 
 
-class ProjectTaskDeleteView(generic.DeleteView):
+class ProjectTaskDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Task
     template_name = "catalog/confirm_delete.html"
 
@@ -202,7 +203,7 @@ class ProjectTaskDeleteView(generic.DeleteView):
         return reverse_lazy("catalog:project-task-list", kwargs={"pk": project_pk})
 
 
-class ProjectTaskToggleCompletedView(View):
+class ProjectTaskToggleCompletedView(LoginRequiredMixin, View):
     @staticmethod
     def post(request, **kwargs):
         task = Task.objects.get(pk=kwargs["pk"])
@@ -210,7 +211,7 @@ class ProjectTaskToggleCompletedView(View):
         task.save()
         return redirect("catalog:project-task-list", pk=kwargs["project_pk"])
 
-class ProjectTaskAddWorkersView(generic.UpdateView):
+class ProjectTaskAddWorkersView(LoginRequiredMixin, generic.UpdateView):
     model = Task
     form_class = TaskAddWorkersForm
     template_name = "catalog/task_add_worker_form.html"
@@ -220,7 +221,7 @@ class ProjectTaskAddWorkersView(generic.UpdateView):
         return reverse_lazy("catalog:project-task-list", kwargs={"pk":project_pk})
 
 
-class TaskTypeList(generic.ListView):
+class TaskTypeList(LoginRequiredMixin, generic.ListView):
     model = TaskType
     paginate_by = 5
 
@@ -245,25 +246,41 @@ class TaskTypeList(generic.ListView):
         return TaskType.objects.all()
 
 
-class TaskTypeCreateView(generic.CreateView):
+class TaskTypeCreateView(LoginRequiredMixin, generic.CreateView):
     model = TaskType
     fields = "__all__"
     success_url = reverse_lazy("catalog:task-type-list")
 
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        for field_name in form.fields:
+            form.fields[field_name].widget.attrs.update({
+                'style': 'background-color: #1a252f; color: white;'  # Добавьте стили
+            })
+        return form
 
-class TaskTypeDeleteView(generic.DeleteView):
+
+class TaskTypeDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = TaskType
     template_name = "catalog/confirm_delete.html"
     success_url = reverse_lazy("catalog:task-type-list")
 
 
-class TaskTypeUpdateView(generic.UpdateView):
+class TaskTypeUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = TaskType
     fields = "__all__"
     success_url = reverse_lazy("catalog:task-type-list")
 
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        for field_name in form.fields:
+            form.fields[field_name].widget.attrs.update({
+                'style': 'background-color: #1a252f; color: white;'  # Добавьте стили
+            })
+        return form
 
-class PositionListView(generic.ListView):
+
+class PositionListView(LoginRequiredMixin, generic.ListView):
     model = Position
     paginate_by = 5
 
@@ -288,19 +305,35 @@ class PositionListView(generic.ListView):
         return Position.objects.all()
 
 
-class PositionCreateView(generic.CreateView):
+class PositionCreateView(LoginRequiredMixin, generic.CreateView):
     model = Position
     fields = "__all__"
     success_url = reverse_lazy("catalog:position-list")
 
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        for field_name in form.fields:
+            form.fields[field_name].widget.attrs.update({
+                'style': 'background-color: #1a252f; color: white;'  # Добавьте стили
+            })
+        return form
 
-class PositionUpdateView(generic.UpdateView):
+
+class PositionUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Position
     fields = "__all__"
     success_url = reverse_lazy("catalog:position-list")
 
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        for field_name in form.fields:
+            form.fields[field_name].widget.attrs.update({
+                'style': 'background-color: #1a252f; color: white;'  # Добавьте стили
+            })
+        return form
 
-class PositionDeleteView(generic.DeleteView):
+
+class PositionDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Position
     template_name = "catalog/confirm_delete.html"
     success_url = reverse_lazy("catalog:position-list")

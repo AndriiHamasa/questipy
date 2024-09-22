@@ -2,12 +2,39 @@
 {% load get_all_projects %}
 
 {% block content %}
-  <h1>{{ worker.username }}</h1>
-  <h3>First name: {{ worker.first_name }}</h3>
-  <h3>Second name: {{ worker.second_name }}</h3>
-  <h4>Position: {{ worker.position }}</h4>
-  <p>Projects: {{ worker.projects.all|get_all_projects }}</p>
-  
-  <hr>
-  <a href="{% url 'catalog:worker-position-update' pk=worker.id %}">Edit worker</a>
+  {#  <h1>{{ worker.username }}</h1>#}
+  {#  <h3>First name: {{ worker.first_name }}</h3>#}
+  {#  <h3>Second name: {{ worker.second_name }}</h3>#}
+  {#  <h4>Position: {{ worker.position }}</h4>#}
+  {#  <p>Projects: {{ worker.projects.all|get_all_projects }}</p>#}
+  {#  #}
+  {#  <hr>#}
+
+
+  <div class="container-worker" style="display: flex; font-size: 20px;">
+    <div class="user-info" style="margin-right: 300px;">
+      <h2>User Details</h2>
+      <p><strong>Username:</strong> {{ user.username }}</p>
+      <p><strong>First Name:</strong> {{ user.first_name }}</p>
+      <p><strong>Last Name:</strong> {{ user.last_name }}</p>
+      <p><strong>Email:</strong> {{ user.email }}</p>
+      <p><strong>Position:</strong> {{ user.position }}</p>
+      <a href="{% url 'catalog:worker-position-update' pk=worker.id %}" class="btn btn-outline-primary">Edit worker</a>
+    </div>
+
+    <div class="task-list">
+      <h3>Assigned Tasks</h3>
+      {% if user.tasks.count > 0 %}
+        {% for task in user.tasks.all %}
+          <div class="task">
+            <p><strong>Task Name:</strong> {{ task.name }}</p>
+            <p><strong>Deadline:</strong> {{ task.deadline }}</p>
+            <p><strong>Description:</strong> {{ task.description }}</p>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p>No tasks assigned.</p>
+      {% endif %}
+    </div>
+  </div>
 {% endblock %}
