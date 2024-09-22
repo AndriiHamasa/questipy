@@ -9,5 +9,5 @@
   <p>Projects: {{ worker.projects.all|get_all_projects }}</p>
   
   <hr>
-  <a href="{% url 'catalog:worker-position-update' pk=worker.id %}">Change position</a>
+  <a href="{% url 'catalog:worker-position-update' pk=worker.id %}">Edit worker</a>
 {% endblock %}

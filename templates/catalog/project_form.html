@@ -1,9 +1,57 @@
 {% extends "base.html" %}
+{% load crispy_forms_filters %}
 
 {% block content %}
-  <form action="" method="post">
-  {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Create" class="btn btn-primary">
-  </form>
+  {#  <form action="" method="post">#}
+  {#  {% csrf_token %}#}
+  {#    {{ form.as_p }}#}
+  {#    <input type="submit" value="Create" class="btn btn-primary">#}
+  {#  </form>#}
+
+  <section class="w-100 p-5 gradient-custom-2" style="border-radius: .5rem;">
+    <style>
+        .gradient-custom-2 {
+            background: linear-gradient(to right, rgba(211, 211, 211, 1), rgba(169, 169, 169, 1));
+        }
+
+        .card {
+            border-radius: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+    </style>
+
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <form action="" method="post">
+              {% csrf_token %}
+              <div class="row">
+                <div class="col-lg-6">
+                  <h3 class="fw-normal mb-4">{{ object|yesno:"Update,Create" }} Project</h3>
+                  <div class="form-group">
+                    {{ form.name|as_crispy_field }}
+                  </div>
+                  <div class="form-group">
+                    {{ form.description|as_crispy_field }}
+                  </div>
+
+                </div>
+                <div class="col-lg-6">
+                  <h3 class="fw-normal mb-4">Assign Workers</h3>
+                  <div class="form-group">
+                    {{ form.workers|as_crispy_field }}
+                  </div>
+                  <input type="submit" class="btn btn-secondary btn-lg" value="{{ object|yesno:"Update,Create" }}">
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 {% endblock %}

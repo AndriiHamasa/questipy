@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1 style="margin-top: 50px;">Workers
+  <h1 style="margin-top: 70px;">Workers
     <a href="{% url 'catalog:worker-create' %}" class="btn btn-secondary">Create worker</a>
   </h1>
 
@@ -10,7 +10,7 @@
 
       <li class="custom-card">
         <div class="card">
-          <div class="card-body">
+          <div class="card-body" style="position: relative;">
             <h5 class="card-title">{{ worker.username }}</h5>
             <h6 class="card-subtitle mb-2 text-body-secondary">
               Position: {{ worker.position }}</h6>
@@ -18,8 +18,8 @@
             <h6 class="card-subtitle mb-2 text-body-secondary">Tasks: {{ project.tasks.count }}
               task{{ project.tasks.count|pluralize }}</h6>
             <p class="card-text">{{ project.description }}</p>
-            {#          <a href="{% url 'catalog:project' %}" class="card-link">Team</a>#}
             <a href="{% url 'catalog:worker-detail' pk=worker.id %}" class="card-link">More</a>
+            <a href="{% url 'catalog:worker-delete' pk=worker.id %}" class="btn btn-danger" style="position: absolute; top: 10px; right: 10px">Delete</a>
           </div>
         </div>
       </li>

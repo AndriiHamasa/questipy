@@ -9,8 +9,8 @@
       {% for tasktype in tasktype_list %}
         <li>
           <p>{{ tasktype.name }}</p>
-          <a href="#" class="btn btn-primary">Update task type</a>
-          <a href="#" class="btn btn-danger">Delete task type</a>
+          <a href="{% url 'catalog:task-type-update' pk=tasktype.id %}" class="btn btn-primary">Update task type</a>
+          <a href="{% url 'catalog:task-type-delete' pk=tasktype.id %}" class="btn btn-danger">Delete task type</a>
         </li>
       {% endfor %}
     </ul>

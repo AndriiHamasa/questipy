@@ -25,11 +25,11 @@
                     <form action="" method="post">
                         {% csrf_token %}
                         <div>
-                                <h3 class="fw-normal mb-4">Create position</h3>
+                                <h3 class="fw-normal mb-4">{{ object|yesno:"Update,Create" }} position</h3>
                                 <div class="form-group">
                                     {{ form.name|as_crispy_field }}
                                 </div>
-                                <input type="submit" class="btn btn-secondary btn-lg" value="Create">
+                                <input type="submit" class="btn btn-secondary btn-lg" value="{{ object|yesno:"Update,Create" }}">
                         </div>
                     </form>
                 </div>

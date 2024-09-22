@@ -11,6 +11,13 @@ class ProjectForm(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple()
     )
 
+    description = forms.CharField(
+        widget=forms.Textarea(attrs={
+            'rows': 4,
+            'style': 'resize: none; overflow: auto;',
+        })
+    )
+
     class Meta:
         model = Project
         fields = "__all__"
@@ -35,10 +42,10 @@ class WorkerCreationForm(UserCreationForm):
 class WorkerPositionUpdateForm(forms.ModelForm):
     class Meta:
         model = get_user_model()
-        fields = ("position", )
+        fields = ("username", "position")
 
 
-class TaskCreationForm(forms.ModelForm):
+class TaskForm(forms.ModelForm):
     assignees = forms.ModelMultipleChoiceField(
         queryset=get_user_model().objects.all(),
         widget=forms.CheckboxSelectMultiple(),
@@ -49,7 +56,7 @@ class TaskCreationForm(forms.ModelForm):
     description = forms.CharField(
         widget=forms.Textarea(attrs={
             'rows': 4,
-            'style': 'resize: vertical;'
+            'style': 'resize: none; overflow: auto;',
         })
     )
     class Meta:

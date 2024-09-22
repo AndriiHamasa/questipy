@@ -8,8 +8,8 @@
     {% for position in position_list %}
       <li>
         <p>{{ position.name }}</p>
-      <a href="#" class="btn btn-primary">Update position</a>
-      <a href="#" class="btn btn-danger">Delete position</a>
+      <a href="{% url 'catalog:position-update' pk=position.id %}" class="btn btn-primary">Update position</a>
+      <a href="{% url 'catalog:position-delete' pk=position.id %}" class="btn btn-danger">Delete position</a>
       </li>
     {% endfor %}
     </ul>

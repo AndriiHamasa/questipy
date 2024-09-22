@@ -7,7 +7,7 @@ from catalog.forms import (
     ProjectForm,
     WorkerCreationForm,
     WorkerPositionUpdateForm,
-    TaskCreationForm,
+    TaskForm,
     TaskAddWorkersForm,
     ProjectNameSearchForm,
     WorkerUsernameSearchForm,
@@ -73,6 +73,7 @@ class ProjectUpdateView(generic.UpdateView):
 
 class ProjectDeleteView(generic.DeleteView):
     model = Project
+    template_name = "catalog/confirm_delete.html"
     success_url = reverse_lazy("catalog:project-list")
 
 class WorkerListView(generic.ListView):
@@ -114,6 +115,13 @@ class WorkerCreateView(generic.CreateView):
 class WorkerPositionUpdateView(generic.UpdateView):
     model = Worker
     form_class = WorkerPositionUpdateForm
+    template_name = "catalog/worker-update-position-form.html"
+    success_url = reverse_lazy('catalog:worker-list')
+
+
+class WorkerDeleteView(generic.DeleteView):
+    model = Worker
+    template_name = "catalog/confirm_delete.html"
     success_url = reverse_lazy('catalog:worker-list')
 
 
@@ -148,7 +156,7 @@ class ProjectTaskListView(generic.ListView):
 
 class ProjectTaskCreateView(generic.CreateView):
     model = Task
-    form_class = TaskCreationForm
+    form_class = TaskForm
     template_name = "catalog/project_task_form.html"
 
     def get_success_url(self):
@@ -163,8 +171,35 @@ class ProjectTaskCreateView(generic.CreateView):
         return super().form_valid(form)
 
 
+class ProjectTaskUpdateView(generic.UpdateView):
+    model = Task
+    form_class = TaskForm
+    template_name = "catalog/project_task_form.html"
+
+    def get_success_url(self):
+        project_pk = self.kwargs.get("project_pk")
+
+        return reverse_lazy("catalog:project-task-list", args=[project_pk])
+
+    def form_valid(self, form):
+        project_pk = self.kwargs.get("project_pk")
+        project = Project.objects.get(pk=project_pk)
+        form.instance.project = project
+        return super().form_valid(form)
+
+
 class ProjectTaskDetailView(generic.DetailView):
     model = Task
+
+
+class ProjectTaskDeleteView(generic.DeleteView):
+    model = Task
+    template_name = "catalog/confirm_delete.html"
+
+    def get_success_url(self):
+        project_pk = self.kwargs.get("project_pk")
+
+        return reverse_lazy("catalog:project-task-list", kwargs={"pk": project_pk})
 
 
 class ProjectTaskToggleCompletedView(View):
@@ -216,6 +251,18 @@ class TaskTypeCreateView(generic.CreateView):
     success_url = reverse_lazy("catalog:task-type-list")
 
 
+class TaskTypeDeleteView(generic.DeleteView):
+    model = TaskType
+    template_name = "catalog/confirm_delete.html"
+    success_url = reverse_lazy("catalog:task-type-list")
+
+
+class TaskTypeUpdateView(generic.UpdateView):
+    model = TaskType
+    fields = "__all__"
+    success_url = reverse_lazy("catalog:task-type-list")
+
+
 class PositionListView(generic.ListView):
     model = Position
     paginate_by = 5
@@ -244,4 +291,16 @@ class PositionListView(generic.ListView):
 class PositionCreateView(generic.CreateView):
     model = Position
     fields = "__all__"
+    success_url = reverse_lazy("catalog:position-list")
+
+
+class PositionUpdateView(generic.UpdateView):
+    model = Position
+    fields = "__all__"
+    success_url = reverse_lazy("catalog:position-list")
+
+
+class PositionDeleteView(generic.DeleteView):
+    model = Position
+    template_name = "catalog/confirm_delete.html"
     success_url = reverse_lazy("catalog:position-list")
