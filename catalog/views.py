@@ -1,8 +1,20 @@
+from django.contrib.auth import get_user_model
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic, View
 
-from catalog.forms import ProjectForm, WorkerCreationForm, WorkerPositionUpdateForm, TaskCreationForm, TaskAddWorkersForm
+from catalog.forms import (
+    ProjectForm,
+    WorkerCreationForm,
+    WorkerPositionUpdateForm,
+    TaskCreationForm,
+    TaskAddWorkersForm,
+    ProjectNameSearchForm,
+    WorkerUsernameSearchForm,
+    TaskNameSearchForm,
+    PositionNameSearchForm,
+    TaskTypeNameSearchForm
+)
 from catalog.models import Project, Worker, TaskType, Task, Position
 
 
@@ -21,6 +33,26 @@ def index(request):
 class ProjectListView(generic.ListView):
     model = Project
     paginate_by = 5
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        name = self.request.GET.get("name", "")
+
+        context["search_form"] = ProjectNameSearchForm(
+            initial={"name": name}
+        )
+        return context
+
+    def get_queryset(self):
+        form = ProjectNameSearchForm(self.request.GET)
+
+        if form.is_valid():
+            return Project.objects.filter(
+                name__icontains=form.cleaned_data["name"]
+            )
+
+        return Project.objects.all()
 
 
 class ProjectDetailView(generic.DetailView):
@@ -47,6 +79,27 @@ class WorkerListView(generic.ListView):
     model = Worker
     paginate_by = 5
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        username = self.request.GET.get("username", "")
+
+        context["search_form"] = WorkerUsernameSearchForm(
+            initial={"username": username}
+        )
+        return context
+
+    def get_queryset(self):
+        form = WorkerUsernameSearchForm(self.request.GET)
+
+        if form.is_valid():
+            return get_user_model().objects.filter(
+                username__icontains=form.cleaned_data["username"]
+            )
+
+        return get_user_model().objects.all()
+
+
 
 class WorkerDetailView(generic.DetailView):
     model = Worker
@@ -71,13 +124,24 @@ class ProjectTaskListView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        name = self.request.GET.get("name", "")
 
         context["project_pk"] = self.kwargs["pk"]
         context["project_name"] = Project.objects.get(pk=context["project_pk"])
+        context["search_form"] = TaskNameSearchForm(
+            initial={"name": name}
+        )
         return context
 
     def get_queryset(self):
+        form = TaskNameSearchForm(self.request.GET)
         project_id = self.kwargs.get("pk")
+
+        if form.is_valid():
+            return Task.objects.filter(
+                name__icontains=form.cleaned_data["name"],
+                project_id=project_id
+            )
 
         return Task.objects.filter(project__id=project_id)
 
@@ -125,6 +189,26 @@ class TaskTypeList(generic.ListView):
     model = TaskType
     paginate_by = 5
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        name = self.request.GET.get("name", "")
+
+        context["search_form"] = TaskTypeNameSearchForm(
+            initial={"name": name}
+        )
+        return context
+
+    def get_queryset(self):
+        form = TaskTypeNameSearchForm(self.request.GET)
+
+        if form.is_valid():
+            return TaskType.objects.filter(
+                name__icontains=form.cleaned_data["name"]
+            )
+
+        return TaskType.objects.all()
+
 
 class TaskTypeCreateView(generic.CreateView):
     model = TaskType
@@ -135,6 +219,26 @@ class TaskTypeCreateView(generic.CreateView):
 class PositionListView(generic.ListView):
     model = Position
     paginate_by = 5
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        name = self.request.GET.get("name", "")
+
+        context["search_form"] = PositionNameSearchForm(
+            initial={"name": name}
+        )
+        return context
+
+    def get_queryset(self):
+        form = PositionNameSearchForm(self.request.GET)
+
+        if form.is_valid():
+            return Position.objects.filter(
+                name__icontains=form.cleaned_data["name"]
+            )
+
+        return Position.objects.all()
 
 
 class PositionCreateView(generic.CreateView):

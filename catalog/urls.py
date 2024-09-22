@@ -19,6 +19,7 @@ from catalog.views import (
     TaskTypeCreateView,
     PositionListView,
     PositionCreateView,
+
 )
 
 urlpatterns = [

@@ -60,3 +60,48 @@ class TaskAddWorkersForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = ("assignees", )
+
+
+class ProjectNameSearchForm(forms.Form):
+    name = forms.CharField(
+        max_length=150,
+        required=True,
+        widget=forms.TextInput(attrs={"placeholder": "Search by name"}),
+        label="",
+    )
+
+
+class WorkerUsernameSearchForm(forms.Form):
+    username = forms.CharField(
+        max_length=150,
+        required=True,
+        widget=forms.TextInput(attrs={"placeholder": "Search by username"}),
+        label="",
+    )
+
+
+class TaskNameSearchForm(forms.Form):
+    name = forms.CharField(
+        max_length=150,
+        required=True,
+        widget=forms.TextInput(attrs={"placeholder": "Search by name"}),
+        label="",
+    )
+
+
+class PositionNameSearchForm(forms.Form):
+    name = forms.CharField(
+        max_length=150,
+        required=True,
+        widget=forms.TextInput(attrs={"placeholder": "Search by name"}),
+        label="",
+    )
+
+
+class TaskTypeNameSearchForm(forms.Form):
+    name = forms.CharField(
+        max_length=150,
+        required=True,
+        widget=forms.TextInput(attrs={"placeholder": "Search by name"}),
+        label="",
+    )
