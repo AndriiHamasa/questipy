@@ -17,6 +17,11 @@ class ProjectForm(forms.ModelForm):
 
 
 class WorkerCreationForm(UserCreationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.help_text = ''
+
     class Meta(UserCreationForm.Meta):
         model = get_user_model()
         fields = UserCreationForm.Meta.fields + (
