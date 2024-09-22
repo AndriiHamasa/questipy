@@ -1,17 +1,53 @@
+{% extends "accounts/_base.html" %}
 
+{% block content %}
+  <section class="p-5 gradient-custom-2" style="border-radius: .5rem; width: 40vw; margin: 10vh auto;">
+    <style>
+        .gradient-custom-2 {
+            background: linear-gradient(to right, rgba(211, 211, 211, 1), rgba(169, 169, 169, 1));
+        }
 
-{% if form.non_field_errors %}
+        .card {
+            border-radius: 15px;
+        }
 
-  {% for message in form.non_field_errors %}
-    {{ message }}
-  {% endfor %}
-{% endif %}
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  {#      <label for="email">email</label>#}
-  {#      {{ form.email }}#}
-  {#      <label for="password">Password</label>#}
-  {#      {{ form.password }}#}
-  <input value="Register" type="submit"/>
-</form>
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+    </style>
+
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <form action="" method="post">
+              {% csrf_token %}
+
+              <div style="position: relative;">
+                {#              <div>#}
+                {#                <h3 class="fw-normal mb-4">Login</h3>#}
+                {#                <div class="form-group">#}
+                {#                  {{ form.email|as_crispy_field }}#}
+                {#                </div>#}
+                {#                <div class="form-group">#}
+                {#                  {{ form.password|as_crispy_field }}#}
+                {#                </div>#}
+                {##}
+                {#              </div>#}
+                <h3 class="fw-normal mb-4">Sign up</h3>
+                {{ form|crispy }}
+
+                <input type="submit" class="btn btn-secondary btn-lg" value="Sign up">
+                <span style="position: absolute; bottom: 0; right: 0;">
+                I already have account: 
+                <a href="{% url 'accounts:login' %}" class="btn btn-outline-dark btn-lg">Login</a>
+              </span>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+

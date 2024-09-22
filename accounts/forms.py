@@ -1,10 +1,10 @@
 from django import forms
-from django.contrib.auth.forms import authenticate, get_user_model
+from django.contrib.auth.forms import authenticate, get_user_model, AuthenticationForm
 
 Worker = get_user_model()
 
 class WorkerRegisterForm(forms.ModelForm):
-    password = forms.CharField(label='Password')
+    password = forms.CharField(widget=forms.PasswordInput)
 
     class Meta:
         model = Worker
@@ -21,3 +21,12 @@ class WorkerRegisterForm(forms.ModelForm):
         if len(password) < 5:
             raise forms.ValidationError('Your password should have more than 5 characters')
         return super(WorkerRegisterForm, self).clean(*args, **kwargs)
+
+
+class LoginForm(AuthenticationForm):
+    email = forms.EmailField(
+        max_length=150,
+        required=True,
+    )
+    password = forms.CharField(widget=forms.PasswordInput)
+

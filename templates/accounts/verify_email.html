@@ -1,5 +1,48 @@
-<h1>You need to verify your email</h1>
-<form method="post">
-    {% csrf_token %}
-    <input class="btn btn-primary max-btn" type="submit" value="Verify">
-</form>
+
+
+{#<h1>You need to verify your email</h1>#}
+{#<form method="post">#}
+{#    {% csrf_token %}#}
+{#    <input class="btn btn-primary max-btn" type="submit" value="Verify">#}
+{#</form>#}
+
+{% extends "accounts/_base.html" %}
+
+{% block content %}
+  <section class="p-5 gradient-custom-2" style="border-radius: .5rem; width: 50vw; margin: 20vh auto 0;">
+    <style>
+        .gradient-custom-2 {
+            background: linear-gradient(to right, rgba(211, 211, 211, 1), rgba(169, 169, 169, 1));
+        }
+
+        .card {
+            border-radius: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+    </style>
+
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+{#            <h1>You need to verify your email</h1>#}
+            <form action="" method="post">
+              {% csrf_token %}
+
+              <div style="position: relative;">
+                
+                <h3 class="fw-normal mb-4">You need to verify your email</h3>
+                
+
+                <input class="btn btn-secondary btn-lg" type="submit" value="Verify">
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
