@@ -5,7 +5,7 @@
   <div style="display: flex; justify-content: space-between; margin-top: 100px;">
     <h2>Project Details</h2>
     <a href="{% url 'catalog:project-update' pk=project.id %}" class="btn btn-secondary btn-lg"
-       >Edit project</a>
+    >Edit project</a>
   </div>
   <div class="container" style="display: flex; margin-top: 50px;">
     <div class=" project-info" style="margin-right: 100px;">
@@ -21,6 +21,37 @@
       {% else %}
         No workers assigned
       {% endif %}
+      <style>
+          .btn-outline-dark-neon-blue {
+              color: #0d47a1; 
+              border: 3px solid #0d47a1; 
+              background-color: transparent;
+              transition: box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out, color 0.3s ease-in-out;
+          }
+
+          .btn-outline-dark-neon-blue:hover {
+              color: #0d47a1; 
+              background-color: transparent; 
+              border-color: #0d47a1; 
+              box-shadow: 0 0 10px #0d47a1; 
+          }
+
+          .btn-outline-dark-neon-blue:active, .btn-outline-dark-neon-blue:focus {
+              background-color: transparent; 
+              box-shadow: 0 0 15px #0d47a1;
+              border-color: #0d47a1; 
+          }
+
+          .btn-outline-dark-neon-blue:disabled {
+              color: #0d47a1;
+              background-color: transparent;
+              border-color: #0d47a1;
+              opacity: 0.65;
+          }
+
+
+      </style>
+      <a href="{% url 'catalog:project-add-workers' pk=project.id %}" class="btn btn-outline-dark-neon-blue btn-lg" style="color: white;">Add worker to project</a>
       </p>
     </div>
 

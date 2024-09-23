@@ -14,7 +14,8 @@ from catalog.forms import (
     WorkerUsernameSearchForm,
     TaskNameSearchForm,
     PositionNameSearchForm,
-    TaskTypeNameSearchForm
+    TaskTypeNameSearchForm,
+    ProjectAddWorkerForm,
 )
 from catalog.models import Project, Worker, TaskType, Task, Position
 
@@ -24,8 +25,8 @@ def index(request):
     worker_list = Worker.objects.all()
 
     context = {
-        'project_list': project_list,
-        'worker_list': worker_list,
+        "project_list": project_list,
+        "worker_list": worker_list,
     }
 
     return render(request, "catalog/index.html", context=context)
@@ -40,18 +41,14 @@ class ProjectListView(LoginRequiredMixin, generic.ListView):
 
         name = self.request.GET.get("name", "")
 
-        context["search_form"] = ProjectNameSearchForm(
-            initial={"name": name}
-        )
+        context["search_form"] = ProjectNameSearchForm(initial={"name": name})
         return context
 
     def get_queryset(self):
         form = ProjectNameSearchForm(self.request.GET)
 
         if form.is_valid():
-            return Project.objects.filter(
-                name__icontains=form.cleaned_data["name"]
-            )
+            return Project.objects.filter(name__icontains=form.cleaned_data["name"])
 
         return Project.objects.all()
 
@@ -63,19 +60,20 @@ class ProjectDetailView(LoginRequiredMixin, generic.DetailView):
 class ProjectCreateView(LoginRequiredMixin, generic.CreateView):
     model = Project
     form_class = ProjectForm
-    success_url = reverse_lazy('catalog:project-list')
+    success_url = reverse_lazy("catalog:project-list")
 
 
 class ProjectUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Project
     form_class = ProjectForm
-    success_url = reverse_lazy('catalog:project-list')
+    success_url = reverse_lazy("catalog:project-list")
 
 
 class ProjectDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Project
     template_name = "catalog/confirm_delete.html"
     success_url = reverse_lazy("catalog:project-list")
+
 
 class WorkerListView(LoginRequiredMixin, generic.ListView):
     model = Worker
@@ -102,7 +100,6 @@ class WorkerListView(LoginRequiredMixin, generic.ListView):
         return get_user_model().objects.all()
 
 
-
 class WorkerDetailView(LoginRequiredMixin, generic.DetailView):
     model = Worker
 
@@ -110,20 +107,20 @@ class WorkerDetailView(LoginRequiredMixin, generic.DetailView):
 class WorkerCreateView(LoginRequiredMixin, generic.CreateView):
     model = Worker
     form_class = WorkerCreationForm
-    success_url = reverse_lazy('catalog:worker-list')
+    success_url = reverse_lazy("catalog:worker-list")
 
 
 class WorkerPositionUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Worker
     form_class = WorkerPositionUpdateForm
     template_name = "catalog/worker-update-position-form.html"
-    success_url = reverse_lazy('catalog:worker-list')
+    success_url = reverse_lazy("catalog:worker-list")
 
 
 class WorkerDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Worker
     template_name = "catalog/confirm_delete.html"
-    success_url = reverse_lazy('catalog:worker-list')
+    success_url = reverse_lazy("catalog:worker-list")
 
 
 class ProjectTaskListView(LoginRequiredMixin, generic.ListView):
@@ -137,9 +134,7 @@ class ProjectTaskListView(LoginRequiredMixin, generic.ListView):
 
         context["project_pk"] = self.kwargs["pk"]
         context["project_name"] = Project.objects.get(pk=context["project_pk"])
-        context["search_form"] = TaskNameSearchForm(
-            initial={"name": name}
-        )
+        context["search_form"] = TaskNameSearchForm(initial={"name": name})
         return context
 
     def get_queryset(self):
@@ -148,8 +143,7 @@ class ProjectTaskListView(LoginRequiredMixin, generic.ListView):
 
         if form.is_valid():
             return Task.objects.filter(
-                name__icontains=form.cleaned_data["name"],
-                project_id=project_id
+                name__icontains=form.cleaned_data["name"], project_id=project_id
             )
 
         return Task.objects.filter(project__id=project_id)
@@ -159,6 +153,12 @@ class ProjectTaskCreateView(LoginRequiredMixin, generic.CreateView):
     model = Task
     form_class = TaskForm
     template_name = "catalog/project_task_form.html"
+
+    def get_initial(self):
+        initial = super().get_initial()
+        project_pk = self.kwargs.get("pk")
+        initial["project_pk"] = project_pk
+        return initial
 
     def get_success_url(self):
         project_pk = self.kwargs.get("pk")
@@ -203,6 +203,16 @@ class ProjectTaskDeleteView(LoginRequiredMixin, generic.DeleteView):
         return reverse_lazy("catalog:project-task-list", kwargs={"pk": project_pk})
 
 
+class ProjectAddWorkersView(LoginRequiredMixin, generic.UpdateView):
+    model = Project
+    form_class = ProjectAddWorkerForm
+    template_name = "catalog/project_add_worker_form.html"
+
+    def get_success_url(self):
+        project_pk = self.kwargs.get("pk")
+        return reverse_lazy("catalog:project-detail", kwargs={"pk": project_pk})
+
+
 class ProjectTaskToggleCompletedView(LoginRequiredMixin, View):
     @staticmethod
     def post(request, **kwargs):
@@ -211,14 +221,21 @@ class ProjectTaskToggleCompletedView(LoginRequiredMixin, View):
         task.save()
         return redirect("catalog:project-task-list", pk=kwargs["project_pk"])
 
+
 class ProjectTaskAddWorkersView(LoginRequiredMixin, generic.UpdateView):
     model = Task
     form_class = TaskAddWorkersForm
     template_name = "catalog/task_add_worker_form.html"
 
+    def get_initial(self):
+        initial = super().get_initial()
+        project_pk = self.kwargs.get("project_pk")
+        initial["project_pk"] = project_pk
+        return initial
+
     def get_success_url(self):
         project_pk = self.kwargs.get("project_pk")
-        return reverse_lazy("catalog:project-task-list", kwargs={"pk":project_pk})
+        return reverse_lazy("catalog:project-task-list", kwargs={"pk": project_pk})
 
 
 class TaskTypeList(LoginRequiredMixin, generic.ListView):
@@ -230,18 +247,14 @@ class TaskTypeList(LoginRequiredMixin, generic.ListView):
 
         name = self.request.GET.get("name", "")
 
-        context["search_form"] = TaskTypeNameSearchForm(
-            initial={"name": name}
-        )
+        context["search_form"] = TaskTypeNameSearchForm(initial={"name": name})
         return context
 
     def get_queryset(self):
         form = TaskTypeNameSearchForm(self.request.GET)
 
         if form.is_valid():
-            return TaskType.objects.filter(
-                name__icontains=form.cleaned_data["name"]
-            )
+            return TaskType.objects.filter(name__icontains=form.cleaned_data["name"])
 
         return TaskType.objects.all()
 
@@ -254,9 +267,9 @@ class TaskTypeCreateView(LoginRequiredMixin, generic.CreateView):
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
         for field_name in form.fields:
-            form.fields[field_name].widget.attrs.update({
-                'style': 'background-color: #1a252f; color: white;'  # Добавьте стили
-            })
+            form.fields[field_name].widget.attrs.update(
+                {"style": "background-color: #1a252f; color: white;"}
+            )
         return form
 
 
@@ -274,9 +287,9 @@ class TaskTypeUpdateView(LoginRequiredMixin, generic.UpdateView):
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
         for field_name in form.fields:
-            form.fields[field_name].widget.attrs.update({
-                'style': 'background-color: #1a252f; color: white;'  # Добавьте стили
-            })
+            form.fields[field_name].widget.attrs.update(
+                {"style": "background-color: #1a252f; color: white;"}
+            )
         return form
 
 
@@ -289,18 +302,14 @@ class PositionListView(LoginRequiredMixin, generic.ListView):
 
         name = self.request.GET.get("name", "")
 
-        context["search_form"] = PositionNameSearchForm(
-            initial={"name": name}
-        )
+        context["search_form"] = PositionNameSearchForm(initial={"name": name})
         return context
 
     def get_queryset(self):
         form = PositionNameSearchForm(self.request.GET)
 
         if form.is_valid():
-            return Position.objects.filter(
-                name__icontains=form.cleaned_data["name"]
-            )
+            return Position.objects.filter(name__icontains=form.cleaned_data["name"])
 
         return Position.objects.all()
 
@@ -313,9 +322,9 @@ class PositionCreateView(LoginRequiredMixin, generic.CreateView):
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
         for field_name in form.fields:
-            form.fields[field_name].widget.attrs.update({
-                'style': 'background-color: #1a252f; color: white;'  # Добавьте стили
-            })
+            form.fields[field_name].widget.attrs.update(
+                {"style": "background-color: #1a252f; color: white;"}
+            )
         return form
 
 
@@ -327,9 +336,9 @@ class PositionUpdateView(LoginRequiredMixin, generic.UpdateView):
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
         for field_name in form.fields:
-            form.fields[field_name].widget.attrs.update({
-                'style': 'background-color: #1a252f; color: white;'  # Добавьте стили
-            })
+            form.fields[field_name].widget.attrs.update(
+                {"style": "background-color: #1a252f; color: white;"}
+            )
         return form
 
 

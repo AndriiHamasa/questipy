@@ -4,7 +4,7 @@
   <div style="margin-top: 100px">
     <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
       <h2>Project {{ project_name }}: task list</h2>
-      <a href="{% url 'catalog:project-task-create' pk=project_pk %}" class="btn btn-secondary btn-lg">Create task</a> {#  #}
+      <a href="{% url 'catalog:project-task-create' pk=project_pk %}" class="btn btn-secondary btn-lg">Create task</a> 
     </div>
     {% if object_list %}
       <ul style="list-style: none;" class="custom-card-container" style="border: 1px solid #ccc; border-radius: 5px; box-shadow: 0 0 5px rgba(204, 204, 204, 0.7); animation: pulse-shadow 2s infinite;">
@@ -60,7 +60,7 @@
         {% endfor %}
       </ul>
     {% else %}
-      <p>There no any task</p>
+      <p>There no any tasks</p>
     {% endif %}
   </div>
   {% include "includes/pagination.html" %}

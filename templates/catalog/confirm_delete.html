@@ -2,12 +2,6 @@
 {% load crispy_forms_filters %}
 
 {% block content %}
-{#  <h1>Delete project {{ project.name }}?</h1>#}
-{#  <form action="" method="post">#}
-{#    {% csrf_token %}#}
-{#    <input type="submit" value="Yes" class="btn btn-danger">#}
-{#  </form>#}
-
   <section class="p-5 gradient-custom-2" style="width: 40vw; margin: -200px auto 0; border-radius: 5px; box-shadow: 0 0 5px rgba(204, 204, 204, 0.7); animation: pulse-shadow 2s infinite;">
     <style>
         .gradient-custom-2 {
@@ -32,9 +26,7 @@
                         {% csrf_token %}
                         <div style="position: relative">
                                 <h3 class="fw-normal mb-4" style="padding-bottom: 40px;">Delete: {% if object.name %}{{ object.name }}{% else %}{{ object.username }}{% endif %}?</h3>
-{#                                <div class="form-group">#}
-{#                                    {{ form.name|as_crispy_field }}#}
-{#                                </div>#}
+
                                 <div style="position: absolute; top: 60px;right: 10px">
                                   <a href="javascript:history.go(-1)" class="btn btn-secondary">No</a>
                                 <input type="submit" value="Yes" class="btn btn-danger" >

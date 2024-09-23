@@ -6,9 +6,9 @@ from catalog.models import Project, TaskType, Position, Worker, Task
 
 @admin.register(Worker)
 class WorkerAdmin(UserAdmin):
-    list_display = UserAdmin.list_display + ("position", )
+    list_display = UserAdmin.list_display + ("position",)
     fieldsets = UserAdmin.fieldsets + (
-        (("Additional info", {"fields": ("position", )}),)
+        (("Additional info", {"fields": ("position",)}),)
     )
     add_fieldsets = UserAdmin.add_fieldsets + (
         (
@@ -35,15 +35,15 @@ class TaskAdmin(admin.ModelAdmin):
         "is_completed",
         "priority",
         "project",
-        "task_type"
+        "task_type",
     )
-    search_fields = ("name", )
+    search_fields = ("name",)
     list_filter = ("is_completed", "task_type")
 
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
-    search_fields = ("name", )
+    search_fields = ("name",)
 
 
 admin.site.register(TaskType)

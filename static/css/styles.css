@@ -1,9 +1,9 @@
 body {
-    background-image: url('https://img.freepik.com/free-photo/black-brick-wall-background_53876-94009.jpg'); /* Путь к изображению */
-    background-size: cover; /* Для покрытия всего элемента */
-    background-position: center; /* Центрирование изображения */
-    height: 100vh; /* Высота контейнера (например, на весь экран) */
-    position: relative; /* Для абсолютного позиционирования псевдоэлемента */
+    background-image: url('https://img.freepik.com/free-photo/black-brick-wall-background_53876-94009.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    position: relative;
 
     color: white;
 }
@@ -140,14 +140,14 @@ input.checked + .slider:before {
 .animated-text {
     font-size: 55px;
     font-weight: bold;
-    color: #1a1a80; /* Глубокий темно-синий цвет */
+    color: #1a1a80;
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.8),
     0 0 20px rgba(255, 255, 255, 0.6),
-    0 0 30px rgba(255, 255, 255, 0.4); /* Белое свечение */
+    0 0 30px rgba(255, 255, 255, 0.4);
     animation: pulseText 3s ease-in-out infinite;
 }
 
-/* Анимация дрожания */
+
 @keyframes shake {
     0% {
         transform: translate(0, 0);
@@ -174,21 +174,21 @@ input.checked + .slider:before {
         box-shadow: 0 0 5px rgba(204, 204, 204, 0.7);
     }
     50% {
-        box-shadow: 0 0 15px rgba(204, 204, 204, 1); /* Увеличение тени в середине анимации */
+        box-shadow: 0 0 15px rgba(204, 204, 204, 1);
     }
 }
 
 .shaking-text {
     font-size: 55px;
     font-weight: bold;
-    color: #5A0D78; /* Тёмно-красный цвет */
+    color: #5A0D78;
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.8),
                  0 0 20px rgba(255, 255, 255, 0.6),
-                 0 0 30px rgba(255, 255, 255, 0.4); /* Белое свечение */
+                 0 0 30px rgba(255, 255, 255, 0.4);
     animation: shake 0.5s infinite ease-in-out;
 }
 
-/* Анимация дрожания */
+
 @keyframes shake {
     0% {
         transform: translate(0, 0);
@@ -245,6 +245,7 @@ input.checked + .slider:before {
     margin-bottom: 10px;
     border-radius: 5px;
 }
+
 
 
 
