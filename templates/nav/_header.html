@@ -1,0 +1,40 @@
+<header class="p-3 bg-dark text-white" style="position: fixed; top: 0; width: 100%; z-index: 1000;">
+  <div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+      <a href="{% url 'catalog:index' %}" class="btn" style="color: white; font-size: 20px;">Questipy</a>
+
+      <div class="select" id="customSelect" style="border-radius: 8px; position: relative;">
+        <div class="selected" style="border-radius: 8px;">Select an option <span
+            style="display: inline-block; position: absolute; right: 10px">▼</span></div>
+        <div class="options" style="border-radius: 8px;">
+          <a href="{% url 'catalog:project-list' %}" class="option">Projects</a>
+          <a href="{% url 'catalog:task-type-list' %}" class="option">Task types</a>
+          <a href="{% url 'catalog:position-list' %}" class="option">Positions</a>
+          <a href="{% url 'catalog:worker-list' %}" class="option">Workers</a>
+        </div>
+      </div>
+
+      {% if object_list %}
+        {% include "includes/search_form.html" %}
+      {% endif %}
+
+      <div class="text-end" style="margin-left: auto">
+        {% if request.user.is_authenticated %}
+          <strong style="margin-right: 20px;">{{ request.user.username }}</strong>
+
+          <form action="{% url 'accounts:logout' %}" method="post" class="d-inline">
+            {% csrf_token %}
+            <input type="submit" class="btn btn-warning" value="Logout">
+          </form>
+        {% else %}
+          <a href="{% url 'accounts:login' %}" class="btn btn-outline-light me-2">
+            Login
+          </a>
+          <a href="{% url 'accounts:signup' %}" class="btn btn-warning">
+            Sign-up
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</header>

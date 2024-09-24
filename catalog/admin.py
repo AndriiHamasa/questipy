@@ -16,6 +16,7 @@ class WorkerAdmin(UserAdmin):
                 "Additional info",
                 {
                     "fields": (
+                        "email",
                         "first_name",
                         "last_name",
                         "position",
