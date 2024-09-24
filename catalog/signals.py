@@ -1,6 +1,6 @@
 from django.db.models.signals import post_migrate
 from django.dispatch import receiver
-from catalog.models import TaskType
+from catalog.models import TaskType, Position
 
 
 @receiver(post_migrate)
@@ -16,4 +16,4 @@ def create_default_positions(sender, **kwargs):
     default_position_list = ["Developer", "Project Manager", "QA", "Designer", "DevOps"]
 
     for position in default_position_list:
-        TaskType.objects.get_or_create(name=position)
+        Position.objects.get_or_create(name=position)
