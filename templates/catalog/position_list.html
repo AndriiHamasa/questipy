@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div style="display: flex; justify-content: space-between">
+    <h1>Positions</h1>
+    <a href="{% url 'catalog:position-create' %}" class="btn btn-secondary btn-lg">Create position</a>
+  </div>
+  {% if position_list %}
+    <ul style="list-style: none">
+      {% for position in position_list %}
+        <li style="width: 20vw; display: flex; justify-content: space-between; border: 1px solid grey; border-radius: 5px; padding: 10px">
+          <p style="font-size: 20px;">{{ position.name }}</p>
+          <div>
+            <a href="{% url 'catalog:position-update' pk=position.id %}" class="btn btn-outline-primary">🔄</a>
+            <a href="{% url 'catalog:position-delete' pk=position.id %}" class="btn btn-outline-danger">❌</a>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>There are no task positions</p>
+  {% endif %}
+
+  {% include "includes/pagination.html" %}
+{% endblock %}

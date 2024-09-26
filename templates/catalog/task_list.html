@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div style="margin-top: 100px">
+    <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+      <h2>Project {{ project_name }}: task list</h2>
+      <a href="{% url 'catalog:project-task-create' pk=project_pk %}" class="btn btn-secondary btn-lg">Create task</a> 
+    </div>
+    {% if object_list %}
+      <ul style="list-style: none;" class="custom-card-container" style="border: 1px solid #ccc; border-radius: 5px; box-shadow: 0 0 5px rgba(204, 204, 204, 0.7); animation: pulse-shadow 2s infinite;">
+        {% for task in object_list %}
+          <li class="custom-card" style="padding-top: 40px; background: linear-gradient(to bottom, #2c3e50, #4b6584); border: 1px solid #ddd; border-radius: 5px; width: 45%; box-shadow: 0 0 5px rgba(204, 204, 204, 0.7);">
+            <div class="card" style="position: relative; padding-top: 40px; background-color: #1a252f;">
+              <div class="card-body">
+
+                <p><strong>Task: {{ task.name }}</strong></p>
+                <p>Priority: {{ task.priority }}</p>
+                <p>Deadline: {{ task.deadline }}</p>
+                <div style="position: absolute; top: 10px; left: 10px;">
+                  <a class="btn btn-outline-secondary"
+                     href="{% url 'catalog:project-task-detail' project_pk=task.project.id pk=task.id %}">Open</a>
+                  <a class="btn btn-outline-danger"
+                     href="{% url 'catalog:project-task-delete' project_pk=task.project.id pk=task.id %}">Delete</a>
+                </div>
+
+                <p><strong>Workers <a
+                    href="{% url 'catalog:project-task-add-workers' project_pk=project_pk pk=task.pk %}"
+                    class="btn btn-outline-secondary" style="display: inline-block; margin-left: 70px;">Add
+                  worker</a></strong></p>
+                {% if task.assignees.count %}
+                  <ul style="list-style: none; padding: 10px; border: 1px solid gray; border-radius: 8px;">
+                    {% for worker in task.assignees.all %}
+                      <li><p>{{ worker.username }}</p></li>
+                    {% endfor %}
+                  </ul>
+                {% else %}
+                  <p>There are no workers yet. Click <a
+                      href="{% url 'catalog:project-task-add-workers' project_pk=project_pk pk=task.pk %}">here</a> to
+                    add
+                  </p>
+                {% endif %}
+
+                <form action="{% url 'catalog:project-task-toggle-completed' project_pk=project_pk pk=task.id %}"
+                      method="post" style="position: absolute; top: 10px; right: 10px;">
+                  {% csrf_token %}
+                  <div class="form-group">
+                    <label for="toggle_field">Completed</label>
+                    <label class="switch">
+                      <input type="submit" id="toggle_field" name="toggle_field"
+                             class="{% if task.is_completed %}checked{% endif %}">
+                      <span class="slider"></span>
+                    </label>
+                  </div>
+                </form>
+
+
+              </div>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>There no any tasks</p>
+    {% endif %}
+  </div>
+  {% include "includes/pagination.html" %}
+{% endblock %}

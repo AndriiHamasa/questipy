@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+  <section class="p-5 gradient-custom-2" style="width: 40vw; margin: -200px auto 0; border: 1px solid #ccc; border-radius: 5px; box-shadow: 0 0 5px rgba(204, 204, 204, 0.7); animation: pulse-shadow 2s infinite; padding: 20px;">
+    <style>
+        .gradient-custom-2 {
+            background: linear-gradient(to bottom, #2c3e50, #4b6584); border: 1px solid #ddd; border-radius: 5px; width: 45%; box-shadow: 0 0 5px rgba(204, 204, 204, 0.7);
+
+        }
+
+        .card {
+            border-radius: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+    </style>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card" style="background-color: #1a252f;">
+                <div class="card-body">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <div>
+                                <h3 class="fw-normal mb-4">Assign Workers</h3>
+                                <div class="form-group">
+                                    {{ form.workers|as_crispy_field }}
+                                </div>
+                                <input type="submit" class="btn btn-secondary btn-lg" value="Add">
+                            
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

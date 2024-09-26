@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container" style="font-size: 20px; display: flex;">
+    <div class="task-info" style="margin-right: 100px;">
+      <h2>Task Details</h2>
+      <p><strong>Name:</strong> {{ task.name }}</p>
+      <p><strong>Description:</strong> {{ task.description }}</p>
+      <p><strong>Deadline:</strong> {{ task.deadline }}</p>
+      <p><strong>Completed:</strong> {{ task.is_completed|yesno:"Yes,No" }}</p>
+      <p><strong>Priority:</strong> {{ task.priority }}</p>
+      <p><strong>Task Type:</strong> {{ task.task_type }}</p>
+
+      <p><strong>Project:</strong> {{ task.project.name }}</p>
+    </div>
+    <div style="margin-right: 100px;"><p><strong>Assignees:</strong><br>
+      {% if task.assignees.count > 0 %}
+        {% for assignee in task.assignees.all %}
+          <p>{{ assignee.get_full_name }}{% if not forloop.last %}, {% endif %}</p>
+        {% endfor %}
+      {% else %}
+        No assignees
+      {% endif %}
+    </div>
+    <div>
+      <a href="{% url 'catalog:project-task-update' project_pk=task.project.id pk=task.id %}"
+         class="btn btn-outline-primary">Update</a>
+      <a href="{% url 'catalog:project-task-delete' project_pk=task.project.id pk=task.id %}"
+         class="btn btn-outline-danger">Delete</a>
+    </div>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div style="display: flex; justify-content: space-between; margin: 80px 0 20px;">
+    <h1>Workers</h1>
+    <a href="{% url 'catalog:worker-create' %}" class="btn btn-secondary btn-lg">Create worker</a>
+  </div>
+  {% if worker_list %}
+    <ul style="list-style: none;" class="custom-card-container">
+      {% for worker in worker_list %}
+
+        <li class="custom-card" style="background: linear-gradient(to bottom, #2c3e50, #4b6584); border: 1px solid #ddd; border-radius: 5px; width: 45%; box-shadow: 0 0 5px rgba(204, 204, 204, 0.7);">
+          <div class="card">
+            <div class="card-body" style="position: relative; background-color: #1a252f;">
+              <h5 class="card-title">{{ worker.username }}</h5>
+              <h6 class="card-subtitle mb-2 text-body-secondary">
+                Position: {{ worker.position }}</h6>
+              <p>Projects: {{ worker.projects.count }}</p>
+              <h6 class="card-subtitle mb-2 text-body-secondary">Tasks: {{ project.tasks.count }}
+                task{{ project.tasks.count|pluralize }}</h6>
+              <p class="card-text">{{ project.description }}</p>
+              <a href="{% url 'catalog:worker-detail' pk=worker.id %}" class="card-link">More</a>
+              <a href="{% url 'catalog:worker-delete' pk=worker.id %}" class="btn btn-outline-danger"
+                 style="position: absolute; top: 10px; right: 10px">Delete</a>
+            </div>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <div style="margin: 0 auto;">
+      <p>There are no workers</p>
+      <p>Click <a href="{% url 'catalog:worker-create' %}">here</a> to create</p>
+    </div>
+  {% endif %}
+
+
+  {% include "includes/pagination.html" %}
+{% endblock %}

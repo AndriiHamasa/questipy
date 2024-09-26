@@ -1,0 +1,236 @@
+[
+  {
+    "model": "catalog.tasktype",
+    "pk": 1,
+    "fields": {
+      "name": "Bug"
+    }
+  },
+  {
+    "model": "catalog.tasktype",
+    "pk": 2,
+    "fields": {
+      "name": "New feature"
+    }
+  },
+  {
+    "model": "catalog.tasktype",
+    "pk": 3,
+    "fields": {
+      "name": "Breaking change"
+    }
+  },
+  {
+    "model": "catalog.tasktype",
+    "pk": 4,
+    "fields": {
+      "name": "Refactoring"
+    }
+  },
+  {
+    "model": "catalog.tasktype",
+    "pk": 5,
+    "fields": {
+      "name": "QA"
+    }
+  },
+  {
+    "model": "catalog.position",
+    "pk": 1,
+    "fields": {
+      "name": "Developer"
+    }
+  },
+  {
+    "model": "catalog.position",
+    "pk": 2,
+    "fields": {
+      "name": "Project Manager"
+    }
+  },
+  {
+    "model": "catalog.position",
+    "pk": 3,
+    "fields": {
+      "name": "QA"
+    }
+  },
+  {
+    "model": "catalog.position",
+    "pk": 4,
+    "fields": {
+      "name": "Designer"
+    }
+  },
+  {
+    "model": "catalog.position",
+    "pk": 5,
+    "fields": {
+      "name": "DevOps"
+    }
+  },
+  {
+    "model": "catalog.project",
+    "pk": 1,
+    "fields": {
+      "name": "SchedulePy",
+      "description": "This project is designed to manage staff scheduling for organizations that work directly with clients. It provides a comprehensive system to organize work shifts, manage employee availability, and ensure efficient scheduling. The system will help businesses optimize their staffing plans, ensuring that the right personnel are available to meet client needs, while reducing scheduling conflicts and improving overall operational efficiency.",
+      "workers": [
+        1,
+        6
+      ]
+    }
+  },
+  {
+    "model": "catalog.worker",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$qHB966TEjWJhy1Z0cK9Fmn$QMpe10Xx1MbD7R2c6ffp67rOCSb9d8gy9HoJcyhJiCc=",
+      "last_login": "2024-09-24T15:27:51.053Z",
+      "is_superuser": false,
+      "username": "andrii",
+      "first_name": "Andrii",
+      "last_name": "Khamaza",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-09-24T15:27:48.398Z",
+      "position": 1,
+      "email": "andrii.khamaza@nure.ua",
+      "email_is_verified": true,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "catalog.worker",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$0b1EBwlAvPOMXUCBUCEAP3$Q8jPKsq5BFPPAWsU3TMtKvP+uIfFH5c8SSaMjguJOwE=",
+      "last_login": "2024-09-24T15:30:15.324Z",
+      "is_superuser": true,
+      "username": "admin",
+      "first_name": "",
+      "last_name": "",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2024-09-24T15:29:44.097Z",
+      "position": 1,
+      "email": "admin@admin.com",
+      "email_is_verified": false,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "catalog.worker",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$QRKtDd2GQfwXvNWQa7HU3Z$XGfJTyOm1hquRJDnjszWB4vtjHlviZSixxE/g1f9Wdc=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "dol_fred",
+      "first_name": "Fred",
+      "last_name": "Dolya",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-09-24T15:42:03.834Z",
+      "position": 2,
+      "email": "",
+      "email_is_verified": false,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "catalog.worker",
+    "pk": 4,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$DwqFW4RW9xMR9Gx5612t9c$3ziOSefcI/lSwlwNosuLzz3+sjGViCo28xVn8f1un8I=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "chal_py",
+      "first_name": "Mike",
+      "last_name": "Cylic",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-09-24T15:45:49.147Z",
+      "position": 5,
+      "email": "chal@chal.com",
+      "email_is_verified": false,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "catalog.worker",
+    "pk": 5,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$ruY4XMybQ61FMYOKeD5p5G$Gpi1plfrH+Kc+1oY25CxwC95VNlHZVoeWs5UDvi2UN4=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "hoh_to",
+      "first_name": "John",
+      "last_name": "Wick",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-09-24T15:46:35.332Z",
+      "position": 4,
+      "email": "hoho@hoho.com",
+      "email_is_verified": false,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "catalog.worker",
+    "pk": 6,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$vvadY4u3OLBC1ByHdnzOtu$xbZ1pFyVFXTS8UOdZlgGhMG+ZUP83YbuNHtktLZ2YFM=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "tol_ya",
+      "first_name": "Tolik",
+      "last_name": "Minko",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-09-24T15:47:37.669Z",
+      "position": 2,
+      "email": "tolya@tolya.com",
+      "email_is_verified": false,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "catalog.task",
+    "pk": 1,
+    "fields": {
+      "name": "create design",
+      "description": "hire data analytic and team of designers",
+      "deadline": "2024-12-19T18:00:00Z",
+      "is_completed": false,
+      "priority": "Medium",
+      "task_type": 2,
+      "project": 1,
+      "assignees": [
+        6
+      ]
+    }
+  },
+  {
+    "model": "catalog.task",
+    "pk": 2,
+    "fields": {
+      "name": "general routing",
+      "description": "develop general routing for app",
+      "deadline": "2024-12-21T18:00:00Z",
+      "is_completed": false,
+      "priority": "Medium",
+      "task_type": 2,
+      "project": 1,
+      "assignees": [
+        1
+      ]
+    }
+  }
+]
