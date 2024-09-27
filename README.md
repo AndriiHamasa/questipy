@@ -61,3 +61,12 @@ Check out the live version of the application here: [Questipy Live Demo](https:/
 6. Run the development server:
     ```bash
     python manage.py runserver96
+   
+## Setting up environment variables
+
+This project requires environment variables to be set in order to run. A sample file, `env.sample`, has been provided to help you set up your `.env` file.
+
+1. Copy the `env.sample` file and rename it to `.env`.
+2. Replace the placeholder values in `.env` with your actual configuration values (e.g., database credentials, secret key).
+3. Save the file and ensure it’s loaded in your environment (Django will automatically use it if you're using something like `django-environ`).
+
