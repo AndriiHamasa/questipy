@@ -18,6 +18,10 @@ Questipy is a task manager application designed to streamline project management
 
 Check out the live version of the application here: [Questipy Live Demo](https://questipy.onrender.com)  
 
+### Use the following credentials to log in:
+- **Email**: user@example.test
+- **Password**: qwerty098
+
 
 ## Technologies Used
 
@@ -56,4 +60,4 @@ Check out the live version of the application here: [Questipy Live Demo](https:/
    
 6. Run the development server:
     ```bash
-    python manage.py runserver
+    python manage.py runserver96
