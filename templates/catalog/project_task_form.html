@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+<section class="w-100 p-5 gradient-custom-2" style="margin-top: 50px; border-radius: 5px; box-shadow: 0 0 5px rgba(204, 204, 204, 0.7); animation: pulse-shadow 2s infinite;">
+    <style>
+        .gradient-custom-2 {
+            background: linear-gradient(to right, rgba(10, 25, 41, 1), rgba(24, 38, 49, 1));
+        }
+
+        .card {
+            border-radius: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+    </style>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body" style="box-shadow: 0 0 5px rgba(204, 204, 204, 0.7); background: linear-gradient(to bottom, #2c3e50, #4b6584);">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h3 class="fw-normal mb-4">{{ object|yesno:"Update,Create" }} Task</h3>
+                                <div class="form-group">
+                                    {{ form.name|as_crispy_field }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.description|as_crispy_field }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.deadline|as_crispy_field }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.priority|as_crispy_field }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.task_type|as_crispy_field }}
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <h3 class="fw-normal mb-4">Assign Workers</h3>
+                                <div class="form-group">
+                                    {{ form.assignees|as_crispy_field }}
+                                </div>
+                                <input type="submit" class="btn btn-secondary btn-lg" value="{{ object|yesno:"Update,Create" }}">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div style="display: flex; justify-content: space-around;">
+    <div style="display: flex; flex-direction: column">
+      <p class="shaking-text">Projects</p>
+      <span style="text-align: center;" class="shaking-text">{{ project_list.count }}</span>
+    </div>
+    <div style="display: flex; flex-direction: column">
+      <p class="shaking-text">Workers</p>
+      <span style="text-align: center;" class="shaking-text">{{ worker_list.count }}</span>
+    </div>
+  </div>
+{% endblock %}

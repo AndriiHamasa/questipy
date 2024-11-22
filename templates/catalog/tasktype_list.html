@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div style="display: flex; justify-content: space-between">
+    <h1>Task types</h1>
+    <a href="{% url 'catalog:task-type-create' %}" class="btn btn-secondary btn-lg">Create task type</a>
+  </div>
+  {% if tasktype_list %}
+    <ul style="list-style: none">
+      {% for tasktype in tasktype_list %}
+        <li style="width: 20vw; display: flex; justify-content: space-between; border: 1px solid grey; border-radius: 5px; padding: 10px">
+          <p style="font-size: 20px;">{{ tasktype.name }}</p>
+          <div>
+            <a href="{% url 'catalog:task-type-update' pk=tasktype.id %}" class="btn btn-outline-primary">🔄</a>
+            <a href="{% url 'catalog:task-type-delete' pk=tasktype.id %}" class="btn btn-outline-danger">❌</a>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>There no task types</p>
+  {% endif %}
+
+  {% include "includes/pagination.html" %}
+{% endblock %}
